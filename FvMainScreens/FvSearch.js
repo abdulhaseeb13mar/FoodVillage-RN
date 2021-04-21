@@ -1,12 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import {View, Text, StyleSheet, TextInput} from 'react-native';
 import WrapperScreen from '../FvFrequentUsage/FvWrapperScreen';
 import {H_W} from '../FvFrequentUsage/FvResponsive';
 import NavigationRef from '../FvFrequentUsage/FvRefNavigation';
@@ -24,7 +18,6 @@ import FvHeader from '../FvFrequentUsage/FvHeader';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {FvHorizontalTile} from './FvHome';
-import {ViewComponent} from 'react-native';
 
 function Search(props) {
   const [searchText, setSearchText] = useState('');

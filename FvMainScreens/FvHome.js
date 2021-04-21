@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import WrapperScreen from '../FvFrequentUsage/FvWrapperScreen';
-import {colors, textFont} from '../FvFrequentUsage/FvColor';
+import {colors} from '../FvFrequentUsage/FvColor';
 import {H_W} from '../FvFrequentUsage/FvResponsive';
 import Data from '../FvData';
 import Loop from '../FvFrequentUsage/FvFlatList';
@@ -18,10 +18,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FastImage from 'react-native-fast-image';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import LinearGradient from 'react-native-linear-gradient';
 import FvHeader from '../FvFrequentUsage/FvHeader';
-import dp from '../FvAllAssets/Images/3.png';
 
 function FvHome(props) {
   useEffect(() => {
@@ -410,11 +407,6 @@ export const TabList = ({item, FvchangeTab, FvcurrentCat}) => {
       </Text>
     </TouchableOpacity>
   );
-};
-
-const border = {
-  // borderWidth: 1,
-  borderColor: 'black',
 };
 
 const mapStateToProps = (state) => {

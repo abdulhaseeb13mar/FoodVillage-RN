@@ -5,17 +5,12 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {H_W} from '../FvFrequentUsage/FvResponsive';
 import {colors} from '../FvFrequentUsage/FvColor';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {Button} from 'react-native-elements';
 import NavigationRef from '../FvFrequentUsage/FvRefNavigation';
 import {connect} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
 import {FvresetCart} from '../FvStateManagement/FvActions';
 import FastImage from 'react-native-fast-image';
 import burgerYellow from '../FvAllAssets/Images/burgerYellow.png';
-import chickenyellow from '../FvAllAssets/Images/chickenyellow.png';
-import drinkyellow from '../FvAllAssets/Images/drinkyellow.png';
 import hamburger from '../FvAllAssets/Images/26.png';
 
 function FvConfirmOrder(props) {
@@ -123,32 +118,6 @@ function FvConfirmOrder(props) {
           }}>
           <AntDesign name="arrowright" size={50} color={colors.primary} />
         </TouchableOpacity>
-        {/* <Button
-          onPress={ResetAndGoHome}
-          title="Shop more"
-          buttonStyle={{
-            backgroundColor: 'black',
-            width: H_W.width * 0.6,
-            borderRadius: 10,
-          }}
-          icon={
-            <FontAwesome
-              name="chevron-right"
-              color={colors.primary}
-              size={19}
-              style={{marginLeft: H_W.width * 0.02}}
-            />
-          }
-          iconRight
-          raised
-          titleStyle={{
-            fontSize: 20,
-            fontWeight: 'bold',
-            borderRadius: 10,
-            color: colors.primary,
-          }}
-          containerStyle={{marginTop: 15, borderRadius: 10}}
-        /> */}
       </View>
     </WrapperScreen>
   );

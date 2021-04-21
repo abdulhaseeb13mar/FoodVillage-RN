@@ -319,11 +319,6 @@ function SingleProduct(props) {
   );
 }
 
-const border = {
-  borderWidth: 1,
-  borderColor: 'black',
-};
-
 const mapStateToProps = (state) => {
   return {
     FvProduct: state.FvCrntPrdtReducer,
