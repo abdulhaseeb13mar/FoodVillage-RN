@@ -57,7 +57,7 @@ const ConfirmOrder = (props) => {
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
-        setShowModal(true);
+        MoveToConfirmOrder();
       }, 2000);
       props.FvUserAction({
         email: email,
@@ -119,10 +119,10 @@ const ConfirmOrder = (props) => {
     }
   };
 
-  // const MoveToConfirmOrder = () => {
-  //   props.FvresetCart();
-  //   NavPointer.Push('FvConfirmOrder');
-  // };
+  const MoveToConfirmOrder = () => {
+    props.FvresetCart();
+    NavPointer.Push('FvConfirmOrder');
+  };
 
   const closeModal = () => {
     setShowModal(false);
