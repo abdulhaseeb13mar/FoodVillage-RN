@@ -24,6 +24,7 @@ import FvHeader from '../FvFrequentUsage/FvHeader';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {FvHorizontalTile} from './FvHome';
+import {ViewComponent} from 'react-native';
 
 function Search(props) {
   const [searchText, setSearchText] = useState('');
@@ -32,7 +33,7 @@ function Search(props) {
   const HEIGHT = H_W.height - (insets.bottom + insets.top);
 
   const RenderSearchedResult = () => {
-    var SearchedItems = Data.Product.filter((item) =>
+    var SearchedItems = Data.product.filter((item) =>
       item.name.toLowerCase().includes(searchText.toLowerCase()),
     );
     return SearchedItems.length === 0 ? (
@@ -91,13 +92,13 @@ function Search(props) {
             shadowRadius: 4.65,
             borderRadius: 7,
           }}>
-          <TouchableOpacity
+          <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
               height: HEIGHT * 0.05,
               paddingLeft: H_W.width * 0.03,
-              backgroundColor: `rgba(${colors.rgb_Primary},0.25)`,
+              backgroundColor: colors.lightGrey2,
               borderRadius: 7,
             }}>
             <Fontisto name="search" size={18} color={colors.primary} />
@@ -113,11 +114,11 @@ function Search(props) {
               placeholder="Search Here..."
               onChangeText={FvchangeSearchText}
             />
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View style={{marginTop: HEIGHT * 0.01, flex: 1}}>
-        {searchText !== '' ? RenderSearchedResult() : CardRender(Data.Product)}
+        {searchText !== '' ? RenderSearchedResult() : CardRender(Data.product)}
       </View>
     </WrapperScreen>
   );

@@ -2,18 +2,18 @@ export default {
   category: [
     {
       id: '1',
-      category: 'seafood',
+      category: 'Seafood',
       icon: require('./FvAllAssets/Images/1.png'),
     },
     {
       id: '2',
-      category: 'burger',
-      icon: require('./FvAllAssets/Images/2.png'),
+      category: 'Burger',
+      icon: require('./FvAllAssets/Images/24.png'),
     },
     {
       id: '3',
       category: 'Soft Drinks',
-      icon: require('./FvAllAssets/Images/3.png'),
+      icon: require('./FvAllAssets/Images/29.png'),
     },
   ],
   product: [

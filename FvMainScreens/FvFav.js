@@ -12,8 +12,9 @@ import {colors} from '../FvFrequentUsage/FvColor';
 import WrapperScreen from '../FvFrequentUsage/FvWrapperScreen';
 import Loop from '../FvFrequentUsage/FvFlatList';
 import NavigationRef from '../FvFrequentUsage/FvRefNavigation';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import Feather from 'react-native-vector-icons/Feather';
 import {FvHorizontalTile} from './FvHome';
+import {H_W} from '../FvFrequentUsage/FvResponsive';
 
 const FvFavourites = (props) => {
   const FvGoToSingleProduct = (item) => {
@@ -39,12 +40,25 @@ const FvFavourites = (props) => {
             />
           )}
           ListHeaderComponent={
-            <FvHeader
-              leftIcon={SimpleLineIcons}
-              leftIconName="arrow-left"
-              leftIconAction={FvGoBack}
-              Title={<Text style={styles.FvFav2}>Favourites</Text>}
-            />
+            <>
+              <FvHeader
+                leftIcon={Feather}
+                leftIconName="corner-up-left"
+                leftIconAction={FvGoBack}
+                Title={<Text style={styles.FvFav2}>Favourites</Text>}
+              />
+              {props.FvFavs.length === 0 && (
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    fontSize: 20,
+                    marginTop: H_W.height * 0.05,
+                  }}>
+                  Sorry No Favorites yet!
+                </Text>
+              )}
+            </>
           }
         />
       </View>

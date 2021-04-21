@@ -16,10 +16,12 @@ import {
 } from '../FvStateManagement/FvActions';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FastImage from 'react-native-fast-image';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import FvHeader from '../FvFrequentUsage/FvHeader';
+import dp from '../FvAllAssets/Images/3.png';
 
 function FvHome(props) {
   useEffect(() => {
@@ -34,7 +36,7 @@ function FvHome(props) {
   const FvchangeTab = (tab) => {
     setFvCurrentCat(tab);
     const filteredProducts = Data.product.filter(
-      (item) => item.categoryid === tab.id,
+      (item) => item.category === tab.id,
     );
     setFvTabProducts(filteredProducts);
   };
@@ -46,87 +48,180 @@ function FvHome(props) {
     RefNavigation.Navigate('FvSP');
   };
 
-  return <WrapperScreen style={{backgroundColor: 'white'}}></WrapperScreen>;
+  return (
+    <WrapperScreen style={{backgroundColor: 'white'}}>
+      <Loop
+        ListHeaderComponent={
+          <ScrollView bounces={false}>
+            <FvHeader
+              leftIcon={Fontisto}
+              leftIconName="heart"
+              leftIconColor={colors.primary}
+              leftIconAction={FvGotoFav}
+              rightIcon={Fontisto}
+              rightIconName="opencart"
+              rightIconColor={colors.primary}
+              rightIconAction={FvGotoCart}
+              Title={
+                <Text style={{color: colors.primary, fontSize: 25}}>
+                  Food<Text style={{color: colors.secondary}}>Village</Text>
+                </Text>
+              }
+            />
+            <View style={{alignItems: 'center', marginVertical: HEIGHT * 0.02}}>
+              <TouchableOpacity
+                onPress={FvGotoSearch}
+                style={{
+                  width: H_W.width * 0.85,
+                  borderRadius: 10,
+                  backgroundColor: colors.lightGrey2,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: H_W.width * 0.02,
+                  paddingVertical: HEIGHT * 0.01,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+                }}>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    color: colors.lightGrey3,
+                    fontSize: 15,
+                  }}>
+                  Search Here...
+                </Text>
+                <FontAwesome
+                  name="search"
+                  color={colors.lightGrey3}
+                  size={16}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text
+              style={{
+                marginLeft: H_W.width * 0.05,
+                fontWeight: 'bold',
+                fontSize: 20,
+                marginBottom: HEIGHT * 0.01,
+              }}>
+              Category
+            </Text>
+            <Loop
+              data={Fvcategories}
+              renderItem={({item}) => (
+                <TabList
+                  item={item}
+                  FvcurrentCat={FvcurrentCat}
+                  FvchangeTab={FvchangeTab}
+                />
+              )}
+            />
+            <Loop
+              data={FvtabProducts}
+              renderItem={({item}) => (
+                <FvVerticalTile
+                  item={item}
+                  FvGoToSingleProduct={FvGoToSingleProduct}
+                />
+              )}
+            />
+            <Text
+              style={{
+                marginLeft: H_W.width * 0.05,
+                fontWeight: 'bold',
+                fontSize: 20,
+              }}>
+              Popular {FvcurrentCat.category}
+            </Text>
+          </ScrollView>
+        }
+        data={FvtabProducts}
+        horizontal={false}
+        renderItem={({item}) => (
+          <FvHorizontalTile
+            item={item}
+            FvFavs={props.FvFavs}
+            FvsetFav={(Fv) => props.FvsetFavAction(Fv)}
+            FvremoveFav={(Fv) => props.FvremoveFavAction(Fv)}
+          />
+        )}
+      />
+    </WrapperScreen>
+  );
 }
 
 export const FvVerticalTile = ({item, FvGoToSingleProduct, FvCart}) => {
-  useEffect(() => {
-    getTheCategory();
-  }, []);
-
-  const [productCategory, setProductCategory] = useState('');
-
-  const getTheCategory = () => {
-    for (let Fv = 0; Fv < Data.Category.length; Fv++) {
-      if (Data.Category[Fv].id === item.categoryid) {
-        setProductCategory(Data.Category[Fv].category);
-        break;
-      }
-    }
-  };
-
   const insets = useSafeAreaInsets();
   const HEIGHT = H_W.height - (insets.bottom + insets.top);
 
   return (
     <TouchableOpacity
       onPress={() => FvGoToSingleProduct(item)}
-      style={{
-        width: H_W.width * 0.57,
-        marginHorizontal: H_W.width * 0.05,
-      }}>
-      <View style={{zIndex: -1, position: 'absolute'}}>
-        <HomeSvg width={H_W.width * 0.57} height={HEIGHT * 0.29} />
-      </View>
-      <LinearGradient
-        style={{
-          width: H_W.width * 0.57,
-          height: HEIGHT * 0.29,
-          position: 'absolute',
-          zIndex: -1,
-        }}
-        colors={['rgba(255,255,255,0)', 'rgba(255,255,255,1)']}
-        locations={[0.1, 1]}
-        start={{x: 0, y: 0}}
-        end={{x: 0, y: 1}}
-      />
-      <FastImage
-        source={item.image}
+      style={{width: H_W.width * 0.5, margin: 20}}>
+      <View
         style={{
           width: '100%',
-          height: HEIGHT * 0.24,
-          marginTop: HEIGHT * 0.02,
-          shadowColor: '#000',
+          borderRadius: H_W.width * 0.26,
+          height: H_W.width * 0.5,
+          backgroundColor: `rgba(${colors.rgb_Primary},1)`,
+          alignItems: 'center',
+          justifyContent: 'center',
+          shadowColor: colors.primary,
           shadowOffset: {
             width: 0,
-            height: 5,
+            height: 4,
           },
-          shadowOpacity: 0.64,
-          shadowRadius: 10.27,
-        }}
-        resizeMode="contain"
-      />
+          shadowOpacity: 0.72,
+          shadowRadius: 5.46,
+        }}>
+        <FastImage
+          source={item.image}
+          style={{
+            width: H_W.width * 0.5,
+            height: H_W.width * 0.5,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+          }}
+          resizeMode="contain"
+        />
+      </View>
       <Text
+        numberOfLines={2}
         style={{
+          width: '100%',
           textAlign: 'center',
-          fontFamily: 'GillSans-Light',
-          fontSize: 12,
-          paddingHorizontal: H_W.width * 0.01,
-        }}
-        numberOfLines={2}>
-        {productCategory.toUpperCase()}
-      </Text>
-      <Text
-        style={{
-          textAlign: 'center',
-          fontFamily: 'DamascusMedium',
-          marginTop: HEIGHT * 0.01,
+          marginTop: HEIGHT * 0.015,
           fontSize: 16,
-          paddingHorizontal: H_W.width * 0.007,
-        }}
-        numberOfLines={2}>
-        {item.name.toUpperCase()}
+          fontWeight: 'bold',
+        }}>
+        {item.name}
       </Text>
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexDirection: 'row',
+          paddingHorizontal: H_W.width * 0.02,
+          marginTop: HEIGHT * 0.005,
+        }}>
+        <Text style={{fontSize: 16, fontWeight: 'bold', color: colors.primary}}>
+          ${item.price}
+        </Text>
+        <Text style={{fontSize: 14, fontWeight: 'bold'}}>
+          <AntDesign name="star" color={colors.secondary} /> {item.rating}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -139,9 +234,20 @@ export const FvHorizontalTile = ({
   FvsetFav,
 }) => {
   useEffect(() => {
+    getTheCategory();
     checkIfFav();
   }, []);
+  const [productCategory, setProductCategory] = useState('');
   const [fav, setFav] = useState(false);
+
+  const getTheCategory = () => {
+    for (let Fv = 0; Fv < Data.category.length; Fv++) {
+      if (Data.category[Fv].id === item.category) {
+        setProductCategory(Data.category[Fv].category);
+        break;
+      }
+    }
+  };
 
   const checkIfFav = () => {
     for (let Fv = 0; Fv < FvFavs.length; Fv++) {
@@ -158,74 +264,103 @@ export const FvHorizontalTile = ({
   const insets = useSafeAreaInsets();
   const HEIGHT = H_W.height - (insets.bottom + insets.top);
   return (
-    <TouchableOpacity
-      onPress={() => FvGoToSingleProduct(item)}
-      style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+    <View
+      style={{
+        alignItems: 'center',
+        marginVertical: HEIGHT * 0.02,
+      }}>
       <View
         style={{
+          overflow: 'visible',
+          borderRadius: 17,
+          backgroundColor: 'white',
+          width: H_W.width * 0.9,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: HEIGHT * 0.004,
+          },
+          shadowOpacity: 0.32,
+          shadowRadius: 5.46,
           flexDirection: 'row',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           justifyContent: 'space-between',
-          width: H_W.width * 0.85,
         }}>
-        <LinearGradient
-          style={{
-            width: H_W.width * 0.2,
-            height: H_W.width * 0.2,
-            borderRadius: 13,
-          }}
-          colors={[`rgba(${colors.rgb_Primary},0.7)`, 'rgba(255,255,255,1)']}
-          start={{x: 0, y: 0}}
-          end={{x: 0, y: 1}}>
-          <FastImage
-            source={item.image}
-            style={{
-              width: H_W.width * 0.2,
-              height: H_W.width * 0.2,
-              borderRadius: 13,
-            }}
-            resizeMode="contain"
-          />
-        </LinearGradient>
         <View
           style={{
             width: H_W.width * 0.6,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            alignSelf: 'stretch',
+            paddingTop: HEIGHT * 0.01,
+            paddingLeft: H_W.width * 0.03,
+            justifyContent: 'space-evenly',
           }}>
-          <View>
+          <Text style={{fontWeight: 'bold', fontSize: 15.5}} numberOfLines={2}>
+            {item.name}
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
             <Text
-              numberOfLines={2}
               style={{
-                color: 'black',
-                width: H_W.width * 0.35,
-                fontFamily: textFont.FuturaMedium,
-                fontSize: 15.5,
+                color: colors.darkGray,
+                fontWeight: 'bold',
+                fontSize: 14,
               }}>
-              {item.name}
+              {productCategory}
             </Text>
-            <View
+            <Text
               style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'row',
-                alignSelf: 'flex-start',
-                marginTop: HEIGHT * 0.015,
+                fontSize: 14,
+                fontWeight: 'bold',
+                marginLeft: H_W.width * 0.02,
               }}>
-              <Text style={{fontSize: 18}}>${item.price}</Text>
-            </View>
+              <AntDesign name="star" color={colors.secondary} />
+              {item.rating}
+            </Text>
           </View>
-          <TouchableOpacity onPress={toggleFav}>
-            <Ionicons
-              name="heart-circle"
-              size={37}
-              color={fav ? 'red' : 'black'}
-            />
-          </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <TouchableOpacity
+              onPress={toggleFav}
+              style={{
+                paddingHorizontal: H_W.width * 0.02,
+                paddingVertical: HEIGHT * 0.008,
+                backgroundColor: colors.secondary,
+                borderRadius: 8,
+              }}>
+              <FontAwesome
+                name={fav ? 'heart' : 'heart-o'}
+                color={colors.primary}
+                size={16}
+              />
+            </TouchableOpacity>
+            <Text
+              style={{
+                marginLeft: H_W.width * 0.05,
+                fontSize: 18,
+                fontWeight: 'bold',
+                alignSelf: 'flex-end',
+              }}>
+              ${item.price}
+            </Text>
+          </View>
         </View>
+        <FastImage
+          source={item.image}
+          style={{
+            width: H_W.width * 0.29,
+            height: H_W.width * 0.29,
+            marginLeft: H_W.width * 0.04,
+          }}
+          resizeMode="contain"
+        />
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -237,13 +372,14 @@ export const TabList = ({item, FvchangeTab, FvcurrentCat}) => {
       style={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         marginHorizontal: H_W.width * 0.03,
         paddingHorizontal: H_W.width * 0.03,
-        paddingVertical: HEIGHT * 0.005,
-        borderRadius: 10,
+        borderRadius: 20,
         backgroundColor:
-          item.category === FvcurrentCat.category ? 'black' : null,
+          item.category === FvcurrentCat.category
+            ? colors.primary
+            : colors.secondary,
         borderWidth: 1,
         borderColor: colors.lightGrey3,
         shadowColor: '#000',
@@ -253,20 +389,30 @@ export const TabList = ({item, FvchangeTab, FvcurrentCat}) => {
         },
         shadowOpacity: 0.29,
         shadowRadius: 4.65,
+        height: HEIGHT * 0.2,
       }}
       onPress={() => FvchangeTab(item)}>
+      <FastImage
+        source={item.icon}
+        style={{width: H_W.width * 0.15, height: HEIGHT * 0.08}}
+        resizeMode="contain"
+      />
       <Text
         style={{
           fontWeight: 'bold',
-          color:
-            item.category === FvcurrentCat.category ? 'white' : colors.primary,
-          fontSize: item.category === FvcurrentCat.category ? 25 : 20,
+          color: item.category === FvcurrentCat.category ? 'white' : 'black',
+          fontSize: item.category === FvcurrentCat.category ? 22 : 16,
           fontFamily: 'PingFangSC-Ultralight',
         }}>
         {item.category}
       </Text>
     </TouchableOpacity>
   );
+};
+
+const border = {
+  // borderWidth: 1,
+  borderColor: 'black',
 };
 
 const mapStateToProps = (state) => {
