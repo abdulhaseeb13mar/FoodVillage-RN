@@ -49,7 +49,7 @@ function MyHeader({
               color={leftIconColor ? leftIconColor : colors.primary}
               style={leftIconStyle ? leftIconStyle : {}}
             />
-            {totalItems > 0 && leftIconName.includes('bag') && (
+            {totalItems > 0 && leftIconName.includes('cart') && (
               <Badge
                 value={totalItems}
                 containerStyle={styles.badgeContainer}
@@ -77,7 +77,7 @@ function MyHeader({
               color={rightIconColor ? rightIconColor : colors.primary}
               style={rightIconStyle ? rightIconStyle : {}}
             />
-            {totalItems > 0 && rightIconName.includes('bag') && (
+            {totalItems > 0 && rightIconName.includes('cart') && (
               <Badge
                 value={totalItems}
                 containerStyle={styles.badgeContainer}

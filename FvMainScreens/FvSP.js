@@ -21,15 +21,21 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
 import FvHeader from '../FvFrequentUsage/FvHeader';
 import StarRating from '../starRating';
+import burgerYellow from '../FvAllAssets/Images/burgerYellow.png';
+import chickenyellow from '../FvAllAssets/Images/chickenyellow.png';
+import drinkyellow from '../FvAllAssets/Images/drinkyellow.png';
 
 function SingleProduct(props) {
   useEffect(() => {
     getTheCategory();
+    getRandomPositions();
     checkIfFav();
   }, []);
   const FvProduct = props.FvProduct;
   const [fav, setFav] = useState(false);
   const [productCategory, setProductCategory] = useState('');
+  const [randomPositions, setRandomPositions] = useState([]);
+  const [backLogo, setBackLogo] = useState(null);
   const insets = useSafeAreaInsets();
   const HEIGHT = H_W.height - (insets.bottom + insets.top);
 
@@ -37,10 +43,27 @@ function SingleProduct(props) {
     for (let Fv = 0; Fv < Data.category.length; Fv++) {
       if (Data.category[Fv].id === FvProduct.category) {
         setProductCategory(Data.category[Fv].category);
+        Data.category[Fv].id === '1'
+          ? setBackLogo(chickenyellow)
+          : Data.category[Fv].id === '2'
+          ? setBackLogo(burgerYellow)
+          : setBackLogo(drinkyellow);
         break;
       }
     }
   };
+
+  function getRandomPositions() {
+    let positions = [];
+    let marginLeft = 0;
+    let rotation = 0;
+    for (let fv = 0; fv < 5; fv++) {
+      marginLeft = Math.random() * (0.9 - 0.04) + 0.04;
+      rotation = Math.random() * (360 - 10) + 10;
+      positions.push({marginLeft, rotation});
+    }
+    setRandomPositions(positions);
+  }
 
   const checkIfFav = () => {
     for (let Fv = 0; Fv < props.FvFavs.length; Fv++) {
@@ -59,10 +82,12 @@ function SingleProduct(props) {
   };
 
   const FvAddToCart = () => {
+    getRandomPositions();
     props.FvaddCartAction({...FvProduct});
   };
 
   const FvRemoveFromCart = () => {
+    getRandomPositions();
     props.FvCart[FvProduct.id] !== undefined &&
       props.FvremoveCartAction(FvProduct);
   };
@@ -72,6 +97,30 @@ function SingleProduct(props) {
 
   return (
     <WrapperScreen style={{backgroundColor: 'white'}}>
+      <View
+        style={{
+          position: 'absolute',
+          zIndex: -1,
+          flex: 1,
+        }}>
+        {randomPositions.length > 0 &&
+          randomPositions.map((pos, index) => (
+            <FastImage
+              key={index}
+              source={backLogo}
+              style={{
+                width: H_W.width * 0.2,
+                height: HEIGHT * 0.1,
+                opacity: 0.5,
+                marginLeft: H_W.width * pos.marginLeft,
+                transform: [{rotate: `${pos.rotation}deg`}],
+                marginTop: index !== 0 ? HEIGHT * 0.1 : 0,
+              }}
+              resizeMode="contain"
+            />
+          ))}
+      </View>
+
       <ScrollView bounces={false}>
         <FvHeader
           leftIcon={Feather}
@@ -151,6 +200,7 @@ function SingleProduct(props) {
             marginTop: HEIGHT * 0.02,
           }}>
           <TouchableOpacity
+            onPress={toggleFav}
             style={{
               paddingHorizontal: H_W.width * 0.027,
               borderRadius: 15,
@@ -180,7 +230,7 @@ function SingleProduct(props) {
               flexDirection: 'row',
             }}>
             <TouchableOpacity
-              // onPress={FnRemoveFromCart}
+              onPress={FvRemoveFromCart}
               style={{
                 backgroundColor: colors.secondary,
                 paddingHorizontal: H_W.width * 0.015,
@@ -197,11 +247,12 @@ function SingleProduct(props) {
               <AntDesign name="minus" size={22} color={colors.primary} />
             </TouchableOpacity>
             <Text style={{fontWeight: 'bold', fontSize: 24, color: 'black'}}>
-              {/* {props.FnCart[FvProduct.id].added} */}
-              10
+              {props.FvCart[FvProduct.id] !== undefined
+                ? props.FvCart[FvProduct.id].added
+                : 0}
             </Text>
             <TouchableOpacity
-              // onPress={FnAddToCart}
+              onPress={FvAddToCart}
               style={{
                 backgroundColor: colors.secondary,
                 paddingHorizontal: H_W.width * 0.015,
@@ -226,7 +277,8 @@ function SingleProduct(props) {
             marginBottom: HEIGHT * 0.02,
             overflow: 'visible',
           }}>
-          <View
+          <TouchableOpacity
+            onPress={FvAddToCart}
             style={{
               width: H_W.width * 0.28,
               height: H_W.width * 0.28,
@@ -260,7 +312,7 @@ function SingleProduct(props) {
               }}>
               Add to Cart!
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </WrapperScreen>

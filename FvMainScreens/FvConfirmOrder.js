@@ -1,10 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import WrapperScreen from '../FvFrequentUsage/FvWrapperScreen';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {H_W} from '../FvFrequentUsage/FvResponsive';
 import {colors} from '../FvFrequentUsage/FvColor';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {Button} from 'react-native-elements';
 import NavigationRef from '../FvFrequentUsage/FvRefNavigation';
@@ -12,88 +12,59 @@ import {connect} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {FvresetCart} from '../FvStateManagement/FvActions';
+import FastImage from 'react-native-fast-image';
+import burgerYellow from '../FvAllAssets/Images/burgerYellow.png';
+import chickenyellow from '../FvAllAssets/Images/chickenyellow.png';
+import drinkyellow from '../FvAllAssets/Images/drinkyellow.png';
+import hamburger from '../FvAllAssets/Images/26.png';
 
 function FvConfirmOrder(props) {
+  useEffect(() => {
+    getRandomPositions();
+  }, []);
   const insets = useSafeAreaInsets();
+  const [randomPositions, setRandomPositions] = useState([]);
   const HEIGHT = H_W.height - (insets.bottom + insets.top);
   const ResetAndGoHome = () => {
     props.FvresetCart();
     NavigationRef.NavigateAndReset('FvHome');
   };
+
+  function getRandomPositions() {
+    let positions = [];
+    let marginLeft = 0;
+    let rotation = 0;
+    for (let fv = 0; fv < 5; fv++) {
+      marginLeft = Math.random() * (0.9 - 0.04) + 0.04;
+      rotation = Math.random() * (360 - 10) + 10;
+      positions.push({marginLeft, rotation});
+    }
+    setRandomPositions(positions);
+  }
   return (
-    <WrapperScreen
-      statusColor={`rgba(${colors.rgb_Primary},0.9)`}
-      style={{
-        backgroundColor: `rgba(${colors.rgb_Primary},0.9)`,
-      }}>
+    <WrapperScreen style={{backgroundColor: 'white'}}>
       <View
         style={{
-          shadowColor: '#000',
-          shadowOffset: {
-            width: -H_W.width * 0.06,
-            height: HEIGHT * 0.02,
-          },
-          shadowOpacity: 1,
-          shadowRadius: 14.78,
+          position: 'absolute',
+          zIndex: -1,
+          flex: 1,
         }}>
-        <LinearGradient
-          style={{
-            zIndex: -1,
-            width: H_W.width * 1,
-            height: H_W.width * 1,
-            borderRadius: H_W.width * 0.6,
-            position: 'absolute',
-            top: HEIGHT * 0.2,
-            left: 0,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          colors={[
-            `rgba(${colors.rgb_Primary},0.3)`,
-            `rgba(${colors.rgb_Primary},0.3)`,
-          ]}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 1}}>
-          <View
-            style={{
-              shadowColor: '#000',
-              shadowOffset: {
-                width: -H_W.width * 0.06,
-                height: HEIGHT * 0.02,
-              },
-              shadowOpacity: 0.1,
-              shadowRadius: 14.78,
-            }}>
-            <LinearGradient
+        {randomPositions.length > 0 &&
+          randomPositions.map((pos, index) => (
+            <FastImage
+              key={index}
+              source={burgerYellow}
               style={{
-                zIndex: -1,
-                width: H_W.width * 0.9,
-                height: H_W.width * 0.9,
-                borderRadius: H_W.width * 0.6,
-                alignItems: 'center',
-                justifyContent: 'center',
+                width: H_W.width * 0.2,
+                height: HEIGHT * 0.1,
+                opacity: 0.5,
+                marginLeft: H_W.width * pos.marginLeft,
+                transform: [{rotate: `${pos.rotation}deg`}],
+                marginTop: index !== 0 ? HEIGHT * 0.1 : 0,
               }}
-              colors={[
-                `rgba(${colors.rgb_Primary},0.5)`,
-                `rgba(${colors.rgb_Primary},0.5)`,
-              ]}>
-              <LinearGradient
-                style={{
-                  zIndex: -1,
-                  width: H_W.width * 0.7,
-                  height: H_W.width * 0.7,
-                  borderRadius: H_W.width * 0.6,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                colors={[
-                  `rgba(${colors.rgb_Primary},0.5)`,
-                  `rgba(${colors.rgb_Primary},0.5)`,
-                ]}
-              />
-            </LinearGradient>
-          </View>
-        </LinearGradient>
+              resizeMode="contain"
+            />
+          ))}
       </View>
       <View
         style={{
@@ -101,23 +72,62 @@ function FvConfirmOrder(props) {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <FontAwesome5 name="couch" size={H_W.width * 0.4} color="white" />
+        <FastImage
+          source={hamburger}
+          style={{
+            width: H_W.width * 0.9,
+            height: HEIGHT * 0.4,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            shadowOpacity: 0.3,
+            shadowRadius: 4.65,
+          }}
+          resizeMode="contain"
+        />
+        <Text style={{color: colors.primary, fontSize: 40, fontWeight: 'bold'}}>
+          Food<Text style={{color: colors.secondary}}>Village</Text>
+        </Text>
         <Text
           style={{
             fontWeight: 'bold',
-            color: 'white',
-            fontSize: 30,
+            color: 'black',
+            fontSize: 25,
             textAlign: 'center',
             width: H_W.width * 0.9,
             marginTop: 15,
           }}>
           WE HAVE RECEIVED YOUR ORDER
         </Text>
-        <Button
+        <TouchableOpacity
+          onPress={ResetAndGoHome}
+          style={{
+            width: H_W.width * 0.28,
+            height: H_W.width * 0.28,
+            backgroundColor: colors.secondary,
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingHorizontal: H_W.width * 0.02,
+            paddingVertical: HEIGHT * 0.01,
+            borderRadius: H_W.width * 0.16,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 6,
+            },
+            shadowOpacity: 0.37,
+            shadowRadius: 7.49,
+            marginTop: HEIGHT * 0.05,
+          }}>
+          <AntDesign name="arrowright" size={50} color={colors.primary} />
+        </TouchableOpacity>
+        {/* <Button
           onPress={ResetAndGoHome}
           title="Shop more"
           buttonStyle={{
-            backgroundColor: 'white',
+            backgroundColor: 'black',
             width: H_W.width * 0.6,
             borderRadius: 10,
           }}
@@ -138,7 +148,7 @@ function FvConfirmOrder(props) {
             color: colors.primary,
           }}
           containerStyle={{marginTop: 15, borderRadius: 10}}
-        />
+        /> */}
       </View>
     </WrapperScreen>
   );

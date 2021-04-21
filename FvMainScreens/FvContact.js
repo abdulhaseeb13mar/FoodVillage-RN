@@ -17,7 +17,7 @@ import {
 } from '../FvStateManagement/FvActions';
 import UseHeader from '../FvFrequentUsage/FvHeader';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import Feather from 'react-native-vector-icons/Feather';
 import Loop from '../FvFrequentUsage/FvFlatList';
 import ItemCounterWrapper from '../FvFrequentUsage/FvItemCounterWrapper';
 import {FvVerticalTile} from './FvHome';
@@ -144,8 +144,8 @@ const ConfirmOrder = (props) => {
     <WrapperScreen style={{backgroundColor: 'white'}}>
       <KeyboardAwareScrollView style={styles.container} bounces={false}>
         <UseHeader
-          leftIcon={SimpleLineIcons}
-          leftIconName="arrow-left"
+          leftIcon={Feather}
+          leftIconName="corner-up-left"
           leftIconColor={colors.primary}
           leftIconAction={FvGoBack}
           Title={<Text style={styles.FvContact2}>Checkout</Text>}
@@ -155,8 +155,8 @@ const ConfirmOrder = (props) => {
           renderItem={({item}) => (
             <ItemCounterWrapper
               style={{marginVertical: HEIGHT * 0.025}}
-              counterColor={colors.primary}
-              counterContentColor="white"
+              counterColor={colors.secondary}
+              counterContentColor={colors.primary}
               item={item}
               position="top"
               Counterlength={H_W.width * 0.2}>
@@ -169,7 +169,6 @@ const ConfirmOrder = (props) => {
         />
         <View
           style={{
-            backgroundColor: colors.primary,
             paddingHorizontal: H_W.width * 0.035,
             paddingTop: HEIGHT * 0.03,
             marginBottom: HEIGHT * 0.04,
@@ -180,10 +179,10 @@ const ConfirmOrder = (props) => {
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <Text style={{fontSize: 17, fontWeight: 'bold', color: 'white'}}>
+            <Text style={{fontSize: 17, fontWeight: 'bold', color: 'black'}}>
               Total Price
             </Text>
-            <Text style={{fontSize: 17, fontWeight: 'bold', color: 'white'}}>
+            <Text style={{fontSize: 17, fontWeight: 'bold', color: 'black'}}>
               $ {props.total}
             </Text>
           </View>
@@ -196,8 +195,8 @@ const ConfirmOrder = (props) => {
               paddingBottom: HEIGHT * 0.03,
               borderBottomWidth: 1,
             }}>
-            <Text style={{color: 'white'}}>Payment Method</Text>
-            <Text style={{color: 'white'}}>Cash on Delivery</Text>
+            <Text style={{color: 'black'}}>Payment Method</Text>
+            <Text style={{color: 'black'}}>Cash on Delivery</Text>
           </View>
         </View>
         <View style={styles.FvPersonalInfoWrapper}>
@@ -376,7 +375,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: H_W.width * 0.02,
     borderRadius: 10,
     borderColor: colors.primary,
-    borderWidth: 1,
+    borderWidth: 1.5,
+    backgroundColor: colors.secondary,
   },
   FvPersonalInfoHeadingName: {
     fontSize: 13,

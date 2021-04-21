@@ -149,6 +149,7 @@ function FvHome(props) {
             FvFavs={props.FvFavs}
             FvsetFav={(Fv) => props.FvsetFavAction(Fv)}
             FvremoveFav={(Fv) => props.FvremoveFavAction(Fv)}
+            FvGoToSingleProduct={FvGoToSingleProduct}
           />
         )}
       />
@@ -269,7 +270,8 @@ export const FvHorizontalTile = ({
         alignItems: 'center',
         marginVertical: HEIGHT * 0.02,
       }}>
-      <View
+      <TouchableOpacity
+        onPress={() => FvGoToSingleProduct(item)}
         style={{
           overflow: 'visible',
           borderRadius: 17,
@@ -359,7 +361,7 @@ export const FvHorizontalTile = ({
           }}
           resizeMode="contain"
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
